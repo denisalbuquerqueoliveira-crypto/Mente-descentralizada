@@ -1,1 +1,21 @@
+name: Preços Cripto (PT-BR)
+
+on:
+  schedule:
+    - cron: '0 12 * * *'   # 09:00 BRT
+    - cron: '0 18 * * *'   # 15:00 BRT
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm i
+      - run: node post.js
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
